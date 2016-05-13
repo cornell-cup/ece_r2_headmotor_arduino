@@ -33,8 +33,8 @@ Encoder myEnc(2, 3);
 void setup() {
   //initialize PWM
   head.attach(PIN_HEAD);
-  drawer1.attach(PIN_DRAWER1);
-  drawer2.attach(PIN_DRAWER2);
+  //drawer1.attach(PIN_DRAWER1);
+  //drawer2.attach(PIN_DRAWER2);
 
   //initialize Serial/UART
   Serial.begin(9600);
@@ -42,14 +42,14 @@ void setup() {
 
   //initialize each motor in their resting position
   head.writeMicroseconds(1500);        //1000-2000, 4.17rev; midpt = 1500us
-  delay(8000); //8s
-  myEnc.write(4096);
+  delay(10000); //10s
   oldAngle = 180;
   correction = 0;
   corrNum = 0;
+  myEnc.write(4096);
   
-  drawer1.writeMicroseconds(0);
-  drawer2.writeMicroseconds(0);
+  //drawer1.writeMicroseconds(0);
+  //drawer2.writeMicroseconds(0);
   
   Serial.println("\n\rServo test program for R2\n\r");
 }
@@ -165,6 +165,6 @@ void move(int rxdat) {
     Serial.print("raw = ");
     Serial.println(x);
     head.writeMicroseconds((int)(x));        //rxdat*total_range/360
-    delay(9000);   //allow 8s for head to try to reach rxdat angle
+    delay(10000);   //allow 8s for head to try to reach rxdat angle
 }
 
