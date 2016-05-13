@@ -57,7 +57,7 @@ void setup() {
 void loop() {
     uint16_t rxdat;
     float head_dc;
-    int encAngle = myEnc.read() * (float)360 / (float)8192;
+    int encAngle = myEnc.read() * (float)360 / (float)8192 + correction;
     Serial.print("encAngle: ");
     Serial.println(encAngle);
 
