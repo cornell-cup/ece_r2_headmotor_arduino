@@ -1,7 +1,7 @@
 
 /*
  * File:   main.c
- * Author: Syed Tahmid Mahbub
+ * Author: Syed Tahmid Mahbub and Laura Ng
  *
  * Created on April 28, 2016
  */
@@ -13,9 +13,6 @@
 #include <Servo.h>
 #include <Encoder.h>
 #include "math.h"
-
-#define MSG_BEGIN       'a'
-#define MSG_END         '\r'
 
 #define PIN_HEAD 10
 #define PIN_DRAWER1 5
@@ -90,49 +87,12 @@ uint8_t serial_get_byte(void){
 }
 
 int serial_get_angle(){
-    #define BUFMAX  2           //changed from 4 to 2 by Laura
+    #define BUFMAX  2           //limit input to 2 characters
     uint8_t rxchar;
     uint8_t rxbuf[BUFMAX+1];
     uint8_t idx;
     
-    // Look for start of message
-//    do{
-//        rxchar = serial_get_byte();
-//    } while (rxchar != MSG_BEGIN);
-    
-    //TAHMID'S CODE DON'T REMOVE!!!
-//    while (1){
-//        idx = 0;
-//        /* Wait for a "completed" message.
-//         * A message is completed if:
-//         *  - BUFMAX characters have been entered
-//         *  - MSG_END has been entered
-//         *  - MSG_BEGIN has been detected
-//         */
-//        do{
-//            rxchar = serial_get_byte();
-//            if (rxchar >= '0' && rxchar <= '9')
-//                rxbuf[idx++] = rxchar;
-//            if (idx == BUFMAX){
-//                Serial.print("\n\r");
-//                break;
-//            }
-//        } while (rxchar != MSG_END && rxchar != MSG_BEGIN);
-//        
-//        // If  a start of message was detected, restart reception
-//        if (rxchar == MSG_BEGIN){
-//            continue;
-//        }
-//        else{
-//            rxbuf[idx] = '\0';
-//            return atoi(rxbuf);
-//        }
-//    }
-    
-    //Laura's attempt at parsing serial message from 16-bit format
-    //format: {15...12, 11, 10...0} bits for channel[4], neg[1], angle[11]
-    //up to transmitter to only send 2 characters (this doesn't check for that)
-    uint16_t channel;    //****NOT DOING ANYTHING WITH CHANNEL OR NEGATIVE YET
+    uint16_t channel;    //current code does not make use of channel or negative yet
     int negative;       //neg = 1, pos = 0
     uint16_t angle;
     
